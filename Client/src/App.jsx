@@ -7,10 +7,10 @@ import Content from './Components/Content'
 
 const App = () => {
   return (
-    <Box>
+    <Box overflowX={'hidden'}>
       <Navbar/>
       <Home/>
-      <Content/>
+      {/* <Content/> */}
     </Box>
   )
 }

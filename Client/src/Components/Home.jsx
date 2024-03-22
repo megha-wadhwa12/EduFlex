@@ -1,19 +1,19 @@
 import React from "react";
-import Navbar from "./Navbar";
-import Background from "./../assets/EduFlexBackground.jpeg";
+import Background from "./../assets/EduFlexBackground.jpg";
 import { Box, Text, Center, Heading, Flex, Button } from "@chakra-ui/react";
 import Theme from "./Theme";
+import AboutUs from "./AboutUs";
 
 const Home = () => {
   return (
     <>
-      <Box background={Theme.colors.primary[100]} width="100vw" height="100vh">
+      <Box background={Theme.colors.primary[100]} width="99vw" >
         <Flex
           direction="column"
           justify="center"
           align="center"
           bgImage={`linear-gradient(0deg, #22033900 0.00%,#22033933 80.00%),linear-gradient(90deg, #22033966 0.00%,#22033900 30.00%),linear-gradient(90deg, #22033900 70.00%,#22033966 100.00%),linear-gradient(180deg, #22033900 30.00%,#220339 100.00%),url(${Background})`}
-          width="100vw"
+          width="100%"
           height="90vh"
           backgroundSize="cover"
           pt="12vw"
@@ -33,19 +33,20 @@ const Home = () => {
           >
             Redefining online learning through AI
           </Text>
-        <Button
-          size="md"
-          height="48px"
-          width="180px"
-          // border="2px"
-          color={Theme.colors.secondary[100]}
-          // borderColor="blue.500"
-          backgroundColor={`${Theme.colors.primary[200]}90`}
-          _hover={{backgroundColor: Theme.colors.primary[200]}}
-        >
-          Button
-        </Button>
+          <Button
+            size="md"
+            height="48px"
+            width="180px"
+            // border="2px"
+            color={Theme.colors.secondary[100]}
+            // borderColor="blue.500"
+            backgroundColor={`${Theme.colors.primary[200]}90`}
+            _hover={{ backgroundColor: Theme.colors.primary[200] }}
+          >
+            Try Now
+          </Button>
         </Flex>
+        <AboutUs />
       </Box>
     </>
   );
