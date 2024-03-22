@@ -5,7 +5,7 @@ require("dotenv").config()
 const app = express();
 app.use(express.json());
 app.use(cors());
-const port = process.env.PORT
+const port = process.env.PORT || 3000
 
 app.use("/api/Users",require("./Routes/UserRoutes"))
 
