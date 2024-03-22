@@ -1,6 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
-import '@fontsource/croissant-one';
-import "@fontsource/exo"
+import '@fontsource/roboto';
 
 const Theme = extendTheme({
   // Define custom colors
@@ -15,8 +14,8 @@ const Theme = extendTheme({
     }
   },
   fonts:{
-    heading: "'Crossiant One', sans-serif",
-    subHeading: "'exo',sans-serif"
+    heading: "'Roboto', sans-serif",
+    subHeading: "'Roboto',sans-serif"
   }
 });
 
