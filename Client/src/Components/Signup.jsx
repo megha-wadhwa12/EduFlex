@@ -50,7 +50,7 @@ const Login = () => {
 
   const PostRequest = async (data) => {
     try {
-      const res = await axios.post("http://localhost:3001/api/Users/signup", {
+      const res = await axios.post("https://eduflex-dieh.onrender.com/api/Users/signup", {
         ...data,
       });
       setLogin(true);
