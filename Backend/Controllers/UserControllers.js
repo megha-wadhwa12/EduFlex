@@ -92,12 +92,12 @@ const LoginUser = async (req, res) => {
 
       console.log('user', user)
       if(!user){
-        return res.status(400).json({error: "Invalid Username...New User? Sign up."})
+        return res.status(400).json({error: "Invalid Username"})
       }
   
       const isPasswordValid = await bcrypt.compare(Password,user.Password)
       if(!isPasswordValid){
-        return res.status(401).json({ error: "Invalid username or password" })
+        return res.status(401).json({ error: "Invalid Password" })
       }
       res.status(200).json({
         user: {

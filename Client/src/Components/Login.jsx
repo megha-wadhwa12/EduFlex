@@ -57,6 +57,7 @@ const Login = () => {
       console.log("res", res);
       setLogin(true);
       setIsLoading(false)
+      setErrorMessage("")
       SuccessToastHandler();
 
       setCookies("UserName", res.data.user.UserName, 30);
@@ -66,7 +67,7 @@ const Login = () => {
       setIsLoading(false)
       console.log("error", error);
       if (error.response && error.response.status === 400) {
-        setErrorMessage(error.response.data);
+        setErrorMessage(error.response.data.error);
       } else {
         setErrorMessage("An error occurred. Please try again later.");
       }
@@ -124,8 +125,8 @@ const Login = () => {
         <Flex justifyContent={"center"} alignItems={"center"}>
           <Flex
             borderRadius={12}
-            width={"420px"}
-            height={"380px"}
+            width={"30vw"}
+            height={"27vw"}
             backgroundColor={`${Theme.colors.primary[300]}90`}
             flexDir={"column"}
             p={"3vw"}
@@ -149,6 +150,7 @@ const Login = () => {
                     placeholder="Username"
                     mb={"0.1vw"}
                     type="text"
+                    color={"#ffffff90"}
                     {...register("UserName", {
                       required: "Enter your UserName",
                       minLength: {
@@ -172,6 +174,7 @@ const Login = () => {
                     placeholder="Password"
                     mb={"0.1vw"}
                     type="password"
+                    color={"#ffffff90"}
                     {...register("Password", {
                       required: "Enter your Password",
                       minLength: {
@@ -194,7 +197,7 @@ const Login = () => {
                     justifyContent={"center"}
                     color={Theme.colors.primary[300]}
                   >
-                    {errorMessage && <Center>{errorMessage}</Center>}
+                    {errorMessage && <Center color={'red'}>{errorMessage}</Center>}
                   </Flex>
                   <Button
                     isLoading={isLoading}
