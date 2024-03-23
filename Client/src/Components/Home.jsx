@@ -3,11 +3,12 @@ import Background from "./../assets/EduFlexBackground.jpg";
 import { Box, Text, Center, Heading, Flex, Button } from "@chakra-ui/react";
 import Theme from "./Theme";
 import AboutUs from "./AboutUs";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
     <>
-      <Box background={Theme.colors.primary[100]} width="99vw" >
+      <Box background={Theme.colors.primary[100]} width="99vw">
         <Flex
           direction="column"
           justify="center"
@@ -33,18 +34,21 @@ const Home = () => {
           >
             Redefining online learning through AI
           </Text>
-          <Button
-            size="md"
-            height="48px"
-            width="180px"
-            // border="2px"
-            color={Theme.colors.secondary[100]}
-            // borderColor="blue.500"
-            backgroundColor={`${Theme.colors.primary[200]}90`}
-            _hover={{ backgroundColor: Theme.colors.primary[200] }}
-          >
-            Try Now
-          </Button>
+          <Link to={"/content"}>
+            {" "}
+            <Button
+              size="md"
+              height="48px"
+              width="180px"
+              // border="2px"
+              color={Theme.colors.secondary[100]}
+              // borderColor="blue.500"
+              backgroundColor={`${Theme.colors.primary[200]}90`}
+              _hover={{ backgroundColor: Theme.colors.primary[200] }}
+            >
+              Try Now
+            </Button>
+          </Link>
         </Flex>
         <AboutUs />
       </Box>
