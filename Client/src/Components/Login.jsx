@@ -46,7 +46,7 @@ import {
     const PostRequest = async (data) => {
       try {
         console.log('data', data)
-        const res = await axios.post("http://localhost:3001/api/Users/login", {
+        const res = await axios.post("https://eduflex-dieh.onrender.com/api/Users/login", {
           ...data
         });
         console.log('res', res)
