@@ -35,6 +35,7 @@ const Navbar = () => {
     <Center display={["none", "flex"]} w={"99vw"}>
       <Flex
         backdropFilter={"auto"}
+        zIndex={10}
         backdropBlur={"5px"}
         pos={"fixed"}
         w={"98%"}
