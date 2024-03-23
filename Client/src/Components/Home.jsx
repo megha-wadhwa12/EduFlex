@@ -4,6 +4,7 @@ import { Box, Text, Center, Heading, Flex, Button } from "@chakra-ui/react";
 import Theme from "./Theme";
 import AboutUs from "./AboutUs";
 import { Link } from "react-router-dom";
+import Footer from "./Footer";
 
 const Home = () => {
   return (
@@ -51,6 +52,7 @@ const Home = () => {
           </Link>
         </Flex>
         <AboutUs />
+        <Footer/>
       </Box>
     </>
   );

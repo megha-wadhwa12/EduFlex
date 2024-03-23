@@ -5,7 +5,7 @@ import Theme from "./Theme";
 const AboutUs = () => {
   return (
     <Center w={'100vw'}>
-        <Flex mt={'3vw'} direction={'column'} align={"center"}>
+        <Flex my={'5vw'} direction={'column'} align={"center"}>
           <Heading size={'3xl'} color={Theme.colors.secondary[100]}>About Us</Heading>
           <Text color={Theme.colors.secondary[100]} mt={'3vw'} textAlign={'center'} w={'80vw'}>
             At EduFlex, we are passionate about redefining the landscape of online
