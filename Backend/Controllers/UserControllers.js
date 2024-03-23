@@ -1,6 +1,8 @@
 const { mongoose } = require("mongoose");
 const mongooseUserModel = require("../Models/UserSchema");
 require("dotenv").config();
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const { UserValidationSchema } = require("../Validation");
 
 
@@ -31,7 +33,8 @@ const getOneUser = async (req, res) => {
 
 const AddNewUser = async (req, res) => {
   try {
-    const { error, value } = UserValidationSchema.validate(req.body, {
+    const rank = await mongooseUserModel.countDocuments({}).exec()
+    const { error, value } = UserValidationSchema.validate({...req.body,Rank: rank+1,Topics: []}, {
       abortEarly: false,
     });
     if (error) {
@@ -39,11 +42,11 @@ const AddNewUser = async (req, res) => {
       const allErrors = error.details.map((e) => e.message);
       res.status(400).json({ error: allErrors });
     } else {
-      const { Name, userName, emailId, Password } = value;
+      const { Name, UserName, EmailId , Password, Rank,Topics } = value;
 
       const hashedPassword = await bcrypt.hash(Password, 10);
 
-      const existingUser = await mongooseUserModel.findOne({ userName });
+      const existingUser = await mongooseUserModel.findOne({ UserName });
       if (existingUser) {
         return res
           .status(400)
@@ -52,17 +55,18 @@ const AddNewUser = async (req, res) => {
 
       const postUser = await mongooseUserModel.create({
         Name,
-        userName,
-        emailId,
+        UserName,
+        EmailId ,
         Password: hashedPassword,
-        Favourites: [],
+        Topics,
+        Rank,
       });
       const authData = {
-        userName: postUser.userName,
+        UserName: postUser.UserName,
       };
       if (postUser) {
         const access_token = jwt.sign(
-          authData.userName,
+          authData.UserName,
           process.env.JWT_SECRET_KEY
         );
         console.log("access_token1: ", access_token);
@@ -81,9 +85,12 @@ const AddNewUser = async (req, res) => {
 };
 
 const LoginUser = async (req, res) => {
+  console.log(req.body);
     try {
-      const {Name,UserName,EmailId,Password,Topics,Rank} = req.body
-      const user = await mongooseUserModel.findOne({ userName})
+      const {UserName,Password,Name} = req.body
+      const user = await mongooseUserModel.findOne({ UserName })
+
+      console.log('user', user)
       if(!user){
         return res.status(400).json({error: "Invalid Username...New User? Sign up."})
       }
@@ -92,7 +99,13 @@ const LoginUser = async (req, res) => {
       if(!isPasswordValid){
         return res.status(401).json({ error: "Invalid username or password" })
       }
-      res.status(200).json({user});
+      res.status(200).json({
+        user: {
+          UserName: user.UserName,
+          Password: user.Password,
+          Name: user.Name
+        },
+      });
   
     } catch (error) {
       console.log('Error Logging In: ', error)
