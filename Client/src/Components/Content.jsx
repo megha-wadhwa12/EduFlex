@@ -5,10 +5,26 @@ import {
 } from "@google/generative-ai";
 import { useEffect, useState } from "react";
 import SubTopicDetail from "./SubTopicDetail";
+import {
+  Box,
+  Center,
+  Flex,
+  Accordion,
+  AccordionItem,
+  AccordionPanel,
+  AccordionIcon,
+  AccordionButton,
+  Heading,
+} from "@chakra-ui/react";
+import Theme from "./Theme";
+import Background from "./../assets/EduFlexBackground.jpg";
+import { Button } from "@chakra-ui/button";
+import { Spinner } from "@chakra-ui/spinner";
 
 const Content = () => {
   const [subTopics, setSubTopics] = useState([]);
-  const [content, setContent] = useState([]);
+  const [value, setValue] = useState("");
+  const [fetched, setFetched] = useState(true);
   const gemini_key = import.meta.env.VITE_GEMINI_API;
   const genAI = new GoogleGenerativeAI(gemini_key);
   function removeAsterisks(str) {
@@ -16,6 +32,7 @@ const Content = () => {
   }
   async function subtopic(topic) {
     try {
+      setFetched(false);
       const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
 
       const chat = model.startChat({
@@ -70,24 +87,101 @@ const Content = () => {
         return e.split(".").slice(1).join(".").trim();
       });
       setSubTopics(UpdatedtextArray);
+      setFetched(true);
+      // setSubTopicFetched(true)
     } catch (error) {
       console.log(error);
-        subtopic(topic);
+      subtopic(topic);
     }
   }
-
-  const finalContent = async () => {
-    
+  // useEffect(() => {
+  //   subtopic("Web Development");
+  // }, []);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    subtopic(value);
   };
-  useEffect(() => {
-    subtopic("Web Development");
-  }, []);
   console.log(subTopics);
-  return <div>
-    {subTopics.map((e,i)=>{
-        return <SubTopicDetail key={i} subTopics={e}/>
-    })}
-  </div>;
+  console.log(gemini_key);
+  return (
+    <Box background={Theme.colors.primary[100]} width="99vw" minH={"100vh"}>
+      <Flex
+        direction="column"
+        justify="center"
+        align="center"
+        bgImage={`linear-gradient(0deg, #22033900 0.00%,#22033933 80.00%),linear-gradient(90deg, #22033966 0.00%,#22033900 30.00%),linear-gradient(90deg, #22033900 70.00%,#22033966 100.00%),linear-gradient(180deg, #22033900 30.00%,#220339 100.00%),url(${Background})`}
+        width="100%"
+        height="50vh"
+        backgroundSize="cover"
+      >
+        <form onSubmit={handleSubmit} style={{marginTop: "10vw"}}>
+          <Flex 
+            direction={"column"}
+            w={"80vw"}
+            h={"10vw"}
+            justify={"space-between"}
+            align={"center"}
+          >
+            <input
+              type="text"
+              value={value}
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
+              style={{
+                width: "100%",
+                height: "4vw",
+                backgroundColor: `${Theme.colors.primary[200]}40`,
+                borderRadius: "2vw",
+                backdropFilter: "blur(7px)",
+                outline: "none",
+                padding: "0 2vw",
+                color: "white",
+                border: "2px solid #ffffff30",
+                filter: "drop-shadow(0 0 1vw #ffffff90)",
+                fontSize: "1.4vw",
+                textAlign: "center",
+                letterSpacing: "0.1vw",
+              }}
+              placeholder="Write any topic you want to learn"
+            />
+            <Button
+              w={"10vw"}
+              h={"3vw"}
+              color={Theme.colors.secondary[100]}
+              // borderColor="blue.500"
+              backgroundColor={`${Theme.colors.primary[200]}90`}
+              _hover={{ backgroundColor: Theme.colors.primary[200] }}
+              fontSize={"1.3vw"}
+              type="submit"
+            >
+              Learn
+            </Button>
+          </Flex>
+        </form>
+      </Flex>
+      {fetched ? (
+        <Flex direction={'column'} align={'center'} >
+          {subTopics.length != 0 && <Heading color={'white'} mb={'2vw'}>Learn {value} in 10 parts</Heading>}
+          <Accordion w={"80vw"} allowToggle color={"white"}>
+            {subTopics.map((e) => {
+              return <SubTopicDetail subTopics={e} />;
+            })}
+          </Accordion>
+        </Flex>
+      ) : (
+        <Center>
+          <Spinner
+            color="blue"
+            size={"xl"}
+            thickness="0.3vw"
+            speed="0.65s"
+            emptyColor="gray.200"
+          />
+        </Center>
+      )}
+    </Box>
+  );
 };
 
 export default Content;

@@ -4,9 +4,9 @@ import Theme from "./Theme";
 
 const AboutUs = () => {
   return (
-    
-        <Flex mt={'3vw'} direction={'column'} align={"center"} w={'99vw'}>
-          <Center w={'80vw'}><Heading size={'3xl'} color={Theme.colors.secondary[100]}>About Us</Heading></Center>
+    <Center w={'100vw'}>
+        <Flex mt={'3vw'} direction={'column'} align={"center"}>
+          <Heading size={'3xl'} color={Theme.colors.secondary[100]}>About Us</Heading>
           <Text color={Theme.colors.secondary[100]} mt={'3vw'} textAlign={'center'} w={'80vw'}>
             At EduFlex, we are passionate about redefining the landscape of online
             learning. Our platform is not just another e-learning solution; it's a
@@ -31,6 +31,7 @@ const AboutUs = () => {
             globe.
           </Text>
         </Flex>
+    </Center>
   );
 };
 

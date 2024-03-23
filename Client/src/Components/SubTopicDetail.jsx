@@ -1,20 +1,34 @@
 import React, { useEffect, useState } from "react";
 import {
-    GoogleGenerativeAI,
-    HarmCategory,
-    HarmBlockThreshold,
-  } from "@google/generative-ai";
-import { Heading } from "@chakra-ui/react";
+  GoogleGenerativeAI,
+  HarmCategory,
+  HarmBlockThreshold,
+} from "@google/generative-ai";
+import {
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Center,
+  Heading,
+  ListItem,
+  Spinner,
+  Text,
+  UnorderedList,
+} from "@chakra-ui/react";
 
 const SubTopicDetail = ({ subTopics }) => {
-    const gemini_key = import.meta.env.VITE_GEMINI_API;
-    const genAI = new GoogleGenerativeAI(gemini_key);
-  const [details, setDetails] = useState("");
+  const gemini_key = import.meta.env.VITE_GEMINI_API;
+  const genAI = new GoogleGenerativeAI(gemini_key);
+  const [details, setDetails] = useState([]);
+  const [fetched, setFetched] = useState(true);
   function removeAsterisks(str) {
     return str.replace(/\*/g, ""); // Using regular expression to replace all asterisks with an empty string
   }
   async function genContent(topic) {
     try {
+      setFetched(false);
       const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
 
       const chat = model.startChat({
@@ -61,21 +75,47 @@ const SubTopicDetail = ({ subTopics }) => {
       const text = res.response.text();
       const { totalTokens } = await model.countTokens(text);
       const withoutText = removeAsterisks(text);
+      let contentArray = withoutText.split("\n");
+      contentArray.shift();
+      contentArray = contentArray.filter((e) => e !== "");
+      contentArray = contentArray.filter((e) => !e.includes("Paragraph"));
 
-      setDetails([withoutText]);
+      setDetails(contentArray);
+      setFetched(true);
     } catch (error) {
       genContent(topic);
-    console.log(error);
+      console.log(error);
     }
   }
-  useEffect(()=>{
-    genContent(subTopics)
-  },[])
+  useEffect(() => {
+    genContent(subTopics);
+  }, []);
   console.log(details);
-  return <div>
-    <Heading>{subTopics}</Heading>
-    {details}
-  </div>;
+  return (
+    <AccordionItem>
+      <h2>
+        <AccordionButton>
+          <Box as="span" flex="1" textAlign="left" fontSize={"1.5vw"}>
+            {subTopics}
+          </Box>
+          <AccordionIcon />
+        </AccordionButton>
+      </h2>
+      <AccordionPanel pb={4}>
+        {fetched ? (
+          <UnorderedList>
+            {details.map((e, i) => {
+              return <ListItem key={i}>{e}</ListItem>;
+            })}
+          </UnorderedList>
+        ) : (
+          <UnorderedList>
+            <Center><Spinner/></Center>
+          </UnorderedList>
+        )}
+      </AccordionPanel>
+    </AccordionItem>
+  );
 };
 
 export default SubTopicDetail;
