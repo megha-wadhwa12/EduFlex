@@ -43,7 +43,7 @@ const AddTopic = async (req, res) => {
         TopicsName,
         TopicDescription,
         LearnTopic,
-        learned_by
+        learned_by: []
       } = value;
       console.log('value', value)
 
