@@ -14,6 +14,7 @@ import {
   AccordionPanel,
   AccordionIcon,
   AccordionButton,
+  Text,
   Heading,
 } from "@chakra-ui/react";
 import Theme from "./Theme";
@@ -25,6 +26,8 @@ const Content = () => {
   const [subTopics, setSubTopics] = useState([]);
   const [value, setValue] = useState("");
   const [fetched, setFetched] = useState(true);
+  const [contentFetched, setContentFetched] = useState(true);
+  const [content, setContent] = useState("");
   const gemini_key = import.meta.env.VITE_GEMINI_API;
   const genAI = new GoogleGenerativeAI(gemini_key);
   function removeAsterisks(str) {
@@ -48,7 +51,7 @@ const Content = () => {
           {
             role: "model",
             parts: [
-              { text: "Ok, I remembered the Schema, Please give me a topic" },
+              { text: "Ok, Please give me a topic" },
             ],
           },
         ],
@@ -94,12 +97,68 @@ const Content = () => {
       subtopic(topic);
     }
   }
-  // useEffect(() => {
-  //   subtopic("Web Development");
-  // }, []);
+  async function genDescription(topic) {
+    try {
+      setContentFetched(false);
+      const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
+
+      const chat = model.startChat({
+        history: [
+          {
+            role: "user",
+            parts: [
+              {
+                text: `You are making a learning content for a topic. Give 300 words description about the topic. only give description, don't include decalration of response`,
+              },
+            ],
+          },
+          {
+            role: "model",
+            parts: [
+              { text: "Ok, Please give me a topic" },
+            ],
+          },
+        ],
+        generationConfig: {
+          maxOutputTokens: 10000,
+          temperature: 0.9,
+          topK: 1,
+          topP: 1,
+        },
+        safetySettings: [
+          {
+            category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+          },
+          {
+            category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+          },
+          {
+            category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+          },
+          {
+            category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+          },
+        ],
+      });
+      const res = await chat.sendMessage(topic);
+      const text = res.response.text();
+      const withoutAsterisks = removeAsterisks(text);
+
+      setContent(withoutAsterisks);
+      setContentFetched(true);
+    } catch (error) {
+      console.log(error);
+      genDescription(topic);
+    }
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     subtopic(value);
+    genDescription(value);
   };
   console.log(subTopics);
   console.log(gemini_key);
@@ -114,8 +173,8 @@ const Content = () => {
         height="50vh"
         backgroundSize="cover"
       >
-        <form onSubmit={handleSubmit} style={{marginTop: "10vw"}}>
-          <Flex 
+        <form onSubmit={handleSubmit} style={{ marginTop: "10vw" }}>
+          <Flex
             direction={"column"}
             w={"80vw"}
             h={"10vw"}
@@ -160,9 +219,21 @@ const Content = () => {
           </Flex>
         </form>
       </Flex>
+      {contentFetched ? (
+        <Flex direction={"column"} align={"center"} my={'3vw'}>
+          {content != "" && <Heading color={"white"} mb={"2vw"}>{value}</Heading>}
+          <Text w={'80vw'} textAlign={'center'} color={"white"}>{content}</Text>
+        </Flex>
+      ) : (
+        <Center><Heading color={'white'}>Generating ...</Heading></Center>
+      )}
       {fetched ? (
-        <Flex direction={'column'} align={'center'} >
-          {subTopics.length != 0 && <Heading color={'white'} mb={'2vw'}>Learn {value} in 10 parts</Heading>}
+        <Flex direction={"column"} align={"center"}>
+          {subTopics.length != 0 && (
+            <Heading color={"white"} mb={"2vw"}>
+              Learn {value} in 10 parts
+            </Heading>
+          )}
           <Accordion w={"80vw"} allowToggle color={"white"}>
             {subTopics.map((e) => {
               return <SubTopicDetail subTopics={e} />;
