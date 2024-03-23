@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import Background from "./../assets/EduFlexBackground.jpg";
 import { Box, Text, Center, Heading, Flex, Button } from "@chakra-ui/react";
 import Theme from "./Theme";
 import AboutUs from "./AboutUs";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
+import { AppContext } from "../Context/ParentContext";
 
 const Home = () => {
   return (

@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const { login, setLogin, setCookies, getCookie } = useContext(AppContext);
+  const { login, setLogin, setCookies, getCookie,aboutRef,footerRef } = useContext(AppContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -84,6 +84,11 @@ const Navbar = () => {
               filter: "drop-shadow(0 0 0.2vw #ffffff90)",
             }}
             transition={"all 0.2s"}
+            onClick={()=>{
+              if (footerRef.current) {
+                footerRef.current.scrollIntoView({behavior: 'smooth'})
+              }
+            }}
           >
             Contact Us
           </Button>
@@ -99,6 +104,11 @@ const Navbar = () => {
               filter: "drop-shadow(0 0 0.2vw #ffffff90)",
             }}
             transition={"all 0.2s"}
+            onClick={()=>{
+              if (aboutRef.current) {
+                aboutRef.current.scrollIntoView({behavior: 'smooth'})
+              }
+            }}
           >
             About
           </Button>

@@ -1,10 +1,12 @@
 import { Center, Flex, Heading, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
 import Theme from "./Theme";
+import { AppContext } from "../Context/ParentContext";
 
 const AboutUs = () => {
+    const {aboutRef} = useContext(AppContext)
   return (
-    <Center w={'100vw'}>
+    <Center ref={aboutRef} w={'100vw'}>
         <Flex my={'5vw'} direction={'column'} align={"center"}>
           <Heading size={'3xl'} color={Theme.colors.secondary[100]}>About Us</Heading>
           <Text color={Theme.colors.secondary[100]} mt={'3vw'} textAlign={'center'} w={'80vw'}>

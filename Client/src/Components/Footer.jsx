@@ -1,5 +1,5 @@
 import { Flex, Heading, Text, Image, Box, Icon } from "@chakra-ui/react"; // Importing Chakra UI components
-import React from "react";
+import React, { useContext } from "react";
 import Theme from "./Theme"; // Importing custom theme
 import FaceBook from "./../assets/FacebookCircled.png"; // Importing Facebook icon
 import Instagram from "./../assets/InstagramIcon.png"; // Importing Instagram icon // Importing Google Plus icon
@@ -7,11 +7,13 @@ import Twitter from "./../assets/TwitterCircled.png"; // Importing Twitter icon 
 import Phone from "./../assets/TelephoneReceiver.png"; // Importing phone icon
 import GmailIcon from "./../assets/GmailIcon.png"; // Importing Gmail icon
 import { RiCopyrightLine } from "react-icons/ri";
+import { AppContext } from "../Context/ParentContext";
 // import CopyrightIcon from "./../assets/CopyrightIcon.png"; // Importing copyright icon
 
 const Footer = () => {
+  const {footerRef} = useContext(AppContext)
   return (
-    <Box pb={10}>
+    <Box ref={footerRef} pb={10}>
       {/* Footer section */}
       <Flex
         backgroundColor={`${Theme.colors.secondary[100]}20`}
