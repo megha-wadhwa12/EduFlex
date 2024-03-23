@@ -3,7 +3,7 @@ import {
   HarmCategory,
   HarmBlockThreshold,
 } from "@google/generative-ai";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SubTopicDetail from "./SubTopicDetail";
 import {
   Box,
@@ -21,15 +21,25 @@ import Theme from "./Theme";
 import Background from "./../assets/EduFlexBackground.jpg";
 import { Button } from "@chakra-ui/button";
 import { Spinner } from "@chakra-ui/spinner";
+import { useNavigate } from "react-router-dom";
+import { useLayoutEffect } from "react";
+import { AppContext } from "../Context/ParentContext";
 
 const Content = () => {
   const [subTopics, setSubTopics] = useState([]);
   const [value, setValue] = useState("");
+  const {login} = useContext(AppContext)
   const [fetched, setFetched] = useState(true);
   const [contentFetched, setContentFetched] = useState(true);
   const [content, setContent] = useState("");
+  const navigate = useNavigate(null)
   const gemini_key = import.meta.env.VITE_GEMINI_API;
   const genAI = new GoogleGenerativeAI(gemini_key);
+  useLayoutEffect(()=>{
+    if(!login){
+      navigate("/login")
+    }
+  },[])
   function removeAsterisks(str) {
     return str.replace(/\*/g, ""); // Using regular expression to replace all asterisks with an empty string
   }
