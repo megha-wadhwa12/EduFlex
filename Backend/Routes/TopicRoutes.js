@@ -5,9 +5,9 @@ const { getAllTopics, getOneTopic, AddTopic,updateAllTopics, deleteTopic
 
 TopicRoutes.get('/',getAllTopics)
 
-TopicRoutes.post('/signup', getOneTopic)
+TopicRoutes.get('/:id', getOneTopic)
 
-TopicRoutes.post('/login',AddTopic)
+TopicRoutes.post('/',AddTopic)
 
 TopicRoutes.put('/:id', updateAllTopics)
 
