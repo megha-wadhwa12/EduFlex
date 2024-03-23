@@ -12,9 +12,9 @@ const App = () => {
     <Box overflowX={'hidden'}>
       <Navbar/>
       {/* <Home/> */}
-      {/* <Content/> */}
-      {/* <Signup /> */}
-      <Login />
+      <Content/>
+      {/* <Signup />
+      <Login /> */}
     </Box>
   )
 }

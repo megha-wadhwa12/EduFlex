@@ -16,6 +16,7 @@ const Navbar = () => {
   return (
     <Center display={["none", "flex"]} w={'99vw'}>
       <Flex
+       zIndex={"10"}
         backdropFilter={"auto"}
         backdropBlur={"5px"}
         pos={"fixed"}
