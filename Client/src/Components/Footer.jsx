@@ -51,8 +51,8 @@ const Footer = () => {
               <Image src={FaceBook} width={"30px"} height={"30px"} />
               <Text>Facebook</Text>
             </Flex>
-            <Flex alignItems={"center"} gap={5}>
-              <Image src={Instagram} width={"30px"} height={"30px"} />
+            <Flex alignItems={"center"}  gap={6}>
+              <Image src={Instagram} width={"25px"} height={"25px"} />
               <Text>Instagram</Text>
             </Flex>
             <Flex alignItems={"center"} gap={6}>
@@ -71,12 +71,16 @@ const Footer = () => {
             <Image src={Phone} width={"25px"} height={"25px"} />
             <Text>Contact Us</Text>
           </Flex>
-          <Flex gap={6}>
+          <Flex gap={6} cursor={'pointer'} onClick={()=>{
+            window.location.href = "mailto:meghawadhwa20@gmail.com"
+          }}>
             {/* Gmail contact */}
             <Image src={GmailIcon} width={"25px"} height={"25px"} />
             <Text>meghawadhwa20@gmail.com</Text>
           </Flex>
-          <Flex gap={6}>
+          <Flex gap={6} cursor={"pointer"} onClick={()=>{
+            window.location.href = "mailto:sp577152@gmail.com"
+          }}>
             {/* Gmail contact */}
             <Image src={GmailIcon} width={"25px"} height={"25px"} />
             <Text>sp577152@gmail.com</Text>
@@ -84,7 +88,8 @@ const Footer = () => {
           {/* Copyright */}
           <Flex gap={0} mt={250} mb={5} align={'center'}>
             {/* <Image src={CopyrightIcon} width={3} /> */}
-              <Icon as={RiCopyrightLine}></Icon>
+              <Icon as={RiCopyrightLine} mr={1}/>
+              
             <Text fontSize={12}>
               2024 Edu Flex. All rights are reserved | Designed by Megha
               Wadhwa & S P Jyotiranjan Sahoo
