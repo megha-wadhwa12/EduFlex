@@ -34,7 +34,7 @@ EduFlex is an innovative e-learning platform designed to revolutionize online le
 
 - **Backend (API) Deployment:** The backend of EduFlex is deployed on [Render](https://eduflex-dieh.onrender.com/api/Topics).
 
-- **Frontend Deployment:** The frontend of EduFlex is deployed on [Netlify](https://www.netlify.com/).
+- **Frontend Deployment:** The frontend of EduFlex is deployed on [Netlify](https://edu-flexx.netlify.app/).
 
 
 ## Contributing

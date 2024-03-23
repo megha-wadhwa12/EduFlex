@@ -244,7 +244,7 @@ const Content = () => {
               Learn {value} in 10 parts
             </Heading>
           )}
-          <Accordion w={"80vw"} allowToggle color={"white"}>
+          <Accordion w={"80vw"} allowToggle color={"white"} pb={'4vw'}>
             {subTopics.map((e) => {
               return <SubTopicDetail subTopics={e} />;
             })}

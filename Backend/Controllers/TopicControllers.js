@@ -42,8 +42,8 @@ const AddTopic = async (req, res) => {
       const {
         TopicsName,
         TopicDescription,
-        LearnTopic,
-        learned_by: []
+        LearnTopic: [],
+        learned_by
       } = value;
       console.log('value', value)
 
