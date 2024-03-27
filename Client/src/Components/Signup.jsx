@@ -1,28 +1,28 @@
 import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  FormControl,
-  FormErrorMessage,
-  Image,
-  Input,
-  Link,
-} from "@chakra-ui/react";
-import React, { useContext, useEffect } from "react";
-import Background from "./../assets/EduFlexBackground.jpg";
-import Theme from "./Theme";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import { AppContext } from "../Context/ParentContext";
-import Logo from "./../assets/EduFlexLogo.png";
-import { ViewIcon } from "@chakra-ui/icons";
-
-const Login = () => {
-  const Navigate = useNavigate();
+    Box,
+    Button,
+    Center,
+    Flex,
+    FormControl,
+    FormErrorMessage,
+    Image,
+    Input,
+    Link,
+  } from "@chakra-ui/react";
+  import React, { useContext, useEffect } from "react";
+  import Background from "./../assets/EduFlexBackground.jpg";
+  import Theme from "./Theme";
+  import { useNavigate } from "react-router-dom";
+  import { useForm } from "react-hook-form";
+  import { ToastContainer, toast } from "react-toastify";
+  import "react-toastify/dist/ReactToastify.css";
+  import axios from "axios";
+  import { AppContext } from "../Context/ParentContext";
+  import Logo from "./../assets/EduFlexLogo.png";
+  import { ViewIcon } from "@chakra-ui/icons";
+  
+  const Signup = () => {
+    const Navigate = useNavigate();
   const {
     login,
     setLogin,
@@ -257,6 +257,6 @@ const Login = () => {
       </Box>
     </Box>
   );
-};
+}
 
-export default Login;
+export default Signup
