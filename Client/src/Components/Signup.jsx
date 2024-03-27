@@ -139,7 +139,7 @@ import {
             />
 
             <form onSubmit={handleSubmit(FormSubmitHandler)}>
-              <FormControl mb={5}>
+              <FormControl mb={5} color={"white"}>
                 <FormControl isInvalid={errors.Name} height={50} mb={5}>
                   <Input
                     focusBorderColor={Theme.colors.primary[100]}
